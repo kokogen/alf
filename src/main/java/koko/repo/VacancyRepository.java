@@ -1,13 +1,11 @@
 package koko.repo;
 
 import koko.model.Vacancy;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-@Repository
-public interface VacancyRepository extends CrudRepository<Vacancy, Long> {
+public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
     List<Vacancy> findByCompanyId(long companyId);
     List<Vacancy> findByPosition(String position);
 }

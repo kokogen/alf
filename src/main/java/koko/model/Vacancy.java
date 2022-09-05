@@ -8,10 +8,10 @@ import javax.persistence.*;
 @Entity
 public class Vacancy {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
 
@@ -22,7 +22,7 @@ public class Vacancy {
     private int salary;
 
     @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "location_id")
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 
     private boolean isActive;
@@ -97,5 +97,20 @@ public class Vacancy {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    @Override
+    public String toString() {
+        return "\nVacancy{" +
+                "\n\t  id=" + id +
+                "\n\t, company=" + company.getId() +
+                "\n\t, position=" + position +
+                "\n\t, mode=" + mode +
+                "\n\t, description='" + description + '\'' +
+                "\n\t, requirements='" + requirements + '\'' +
+                "\n\t, salary=" + salary +
+                "\n\t, location=" + location +
+                "\n\t, isActive=" + isActive +
+                "\n\t}";
     }
 }

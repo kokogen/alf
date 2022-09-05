@@ -22,17 +22,17 @@ public class Util {
     private static LocationRepository locationRepository;
 
     public static VacancyDTO toVacancyDTO(Vacancy vacancy) {
-        VacancyDTO vacancyDTO = new VacancyDTO();
-        vacancyDTO.setId(vacancy.getId());
-        vacancyDTO.setActive(vacancy.getIsActive());
-        vacancyDTO.setDescription(vacancy.getDescription());
-        vacancyDTO.setLocationId(vacancy.getLocation().getId());
-        vacancyDTO.setCompanyId(vacancy.getCompany().getId());
-        vacancyDTO.setRequirements(vacancy.getRequirements());
-        vacancyDTO.setMode(vacancy.getMode());
-        vacancyDTO.setPosition(vacancy.getPosition());
-        vacancyDTO.setSalary(vacancy.getSalary());
-        return vacancyDTO;
+        return VacancyDTO.builder()
+                .id(vacancy.getId())
+                .companyId(vacancy.getCompany().getId())
+                .locationId(vacancy.getLocation().getId())
+                .description(vacancy.getDescription())
+                .isActive(vacancy.getIsActive())
+                .mode(vacancy.getMode())
+                .position(vacancy.getPosition())
+                .requirements(vacancy.getRequirements())
+                .salary(vacancy.getSalary())
+                .build();
     }
 
     public static Vacancy toVacancy(VacancyDTO vacancyDTO) throws IllegalStateException {
@@ -44,6 +44,7 @@ public class Util {
         vacancy.setPosition(vacancyDTO.getPosition());
         vacancy.setRequirements(vacancy.getRequirements());
         vacancy.setMode(vacancyDTO.getMode());
+        vacancy.setSalary(vacancyDTO.getSalary());
 
         locationRepository.findById(vacancyDTO.getLocationId())
                 .ifPresentOrElse(
@@ -57,18 +58,18 @@ public class Util {
                         () -> {throw new IllegalStateException("Company wth id = " + vacancyDTO.getCompanyId() + "not found.");}
                 );
 
-        vacancy.getCompany().addVacancy(vacancy);
+        //vacancy.getCompany().addVacancy(vacancy);
         return vacancy;
     }
 
     public static CompanyDTO toCompanyDTO(Company company) {
-        CompanyDTO companyDTO = new CompanyDTO();
-        companyDTO.setId(company.getId());
-        companyDTO.setName(company.getName());
-        companyDTO.setUrl(company.getUrl());
-        companyDTO.setArea(company.getArea());
-        companyDTO.setVacancies(company.getVacancies().stream().map(Util::toVacancyDTO).collect(Collectors.toSet()));
-        return companyDTO;
+        return CompanyDTO.builder()
+                .id(company.getId())
+                .name(company.getName())
+                .url(company.getUrl())
+                .area(company.getArea())
+                .vacancies(company.getVacancies().stream().map(Util::toVacancyDTO).collect(Collectors.toSet()))
+                .build();
     }
 
     public static Company toCompany(CompanyDTO companyDTO) {
@@ -90,7 +91,10 @@ public class Util {
     }
 
     public static LocationDTO toLocationDTO(Location location) {
-        return new LocationDTO(location.getId(), location.getName(), location.getCountryName());
-
+        return LocationDTO.builder()
+                .id(location.getId())
+                .name(location.getName())
+                .countryName(location.getCountryName())
+                .build();
     }
 }

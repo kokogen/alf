@@ -1,14 +1,11 @@
 package koko.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Location {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private String id;
     private String name;
     private String countryName;
@@ -35,5 +32,14 @@ public class Location {
 
     public void setCountryName(String countryName) {
         this.countryName = countryName;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", countryName='" + countryName + '\'' +
+                '}';
     }
 }

@@ -1,12 +1,10 @@
 package koko.repo;
 
 import koko.model.Company;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-@Repository
-public interface CompanyRepository extends CrudRepository<Company, Long> {
+public interface CompanyRepository extends JpaRepository<Company, Long> {
     List<Company> findByName(String companyName);
 }

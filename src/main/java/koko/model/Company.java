@@ -1,13 +1,12 @@
 package koko.model;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 public class Company {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 
     private String name;
@@ -60,5 +59,16 @@ public class Company {
 
     public void addVacancy(Vacancy vacancy) {
         if(vacancies.stream().noneMatch(x -> x.getId() == vacancy.getId())) vacancies.add(vacancy);
+    }
+
+    @Override
+    public String toString() {
+        return "\nCompany{" +
+                "\n  id=" + id +
+                "\n, name='" + name + '\'' +
+                "\n, url='" + url + '\'' +
+                "\n, area='" + area + '\'' +
+                "\n, vacancies=" + vacancies +
+                "\n}";
     }
 }
